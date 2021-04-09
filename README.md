@@ -1,2 +1,2 @@
-# Selfie21.github.io
-This will host a facewarp application using the motion from your phone.
+# Get Reflexed!
+This Website will host a Web App with a reflex game.
