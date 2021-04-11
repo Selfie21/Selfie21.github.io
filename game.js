@@ -18,7 +18,6 @@ var clockCounter = 0;
 var rightPressed = false;
 var leftPressed = false;
 var gamma = 0;
-var prevgamma = 0;
 
 var bananaImg = new Image();
 var bananax = 0;
@@ -62,8 +61,8 @@ function restart() {
 	clearInterval(refreshIntervalId);
 	setupRound(10);
 	refreshIntervalId = setInterval(draw, 10);
-
 }
+
 //Resetting Objects
 function setupRound(diff){
 	posx = Math.round((canvas_width/2) - (width/2));
@@ -87,8 +86,10 @@ function draw() {
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     drawLead();
     drawBananas();
-    checkCollision();
     drawMonkeys();
+
+    checkCollision();
+    detectMovement();
 
     if(rightPressed) {
         posx += 1;
@@ -161,12 +162,11 @@ function testAcc(){
 }
 
 function detectMovement(){
-	if(prevgamma > gamma){
+	if(0 > gamma){
 		rightPressed = true;
 	}else{
 		leftPressed = true;
 	}
-	prevgamma = gamma;
 }
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
