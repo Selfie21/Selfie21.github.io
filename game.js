@@ -1,7 +1,6 @@
 //Canvas
 var canvas = document.getElementById("gameCanvas");
 var welcome = document.getElementById("starter");
-document.getElementById("test").innerHTML = false;
 var ctx = canvas.getContext("2d");
 var acc_available = true;
 var canvas_height = 0;
@@ -12,28 +11,33 @@ var posx = 0;
 var posy = 0;
 var width = 0;
 var height = 0;
+var difficulty = 1;
+
+var clockCounter = 0;
 var rightPressed = false;
 var leftPressed = false;
+
 var bananaImg = new Image();
-var monkeyImg = new Image();
 var bananax = 0;
 var bananay = 0;
-var clockCounter = 0;
+var bananaOnScreen = false;
+
+var monkeyImg = new Image();
+var monkeys = [[0,0],[0,0],[0,0],[0,0]];
 
 
 //Get Page Size when Page is loaded
 window.onload = loadInputs();
 
 function loadInputs(){
-	  
   	bananaImg.src = "media/banana.png";
   	monkeyImg.src = "media/happy_monkey.png";
-	canvas_height = window.innerHeight - (window.innerHeight/10);
-	canvas_width = canvas_height/2;
-	width = canvas_width/6;
+	canvas_height = Math.round(window.innerHeight - (window.innerHeight/10));
+	canvas_width = Math.round(canvas_height/2);
+	width = Math.round(canvas_width/6);
 	height = 10;
-	posx = (canvas_width/2) - (width/2);
-	posy = canvas_height - 20;
+	posx = Math.round((canvas_width/2) - (width/2));
+	posy = Math.round(canvas_height - 20);
 }
 
 // Start Game
@@ -42,20 +46,29 @@ function main() {
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
 	testAcc();
-
 	window.addEventListener("deviceorientation", function(event) {
-	document.getElementById("acc").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
+	document.querySelector("#mag").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
 	}, true);
 
+	// Setup Objects
+	for (var i = 0; i < monkeys.length; i++) {
+  		var randomPlacement = Math.floor((Math.random() * (canvas_width-width)) + 1);
+  		monkeys[i][0] = randomPlacement;
+  		monkeys[i][1] = (i*width);
+	} 
+	bananax = posx;
+	bananay = posy;
   	setInterval(draw, 10);
 }
 
 
 // Drawing Part
 function draw() {
+
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     drawLead();
     drawBananas();
+    drawMonkeys();
 
     if(rightPressed) {
         posx += 1;
@@ -83,26 +96,28 @@ function drawLead() {
 }
 
 function drawBananas() {
-	if(clockCounter == 100){
+	if(clockCounter > 100 && !bananaOnScreen){
 		bananax = posx;
 		bananay = posy;
 		clockCounter = 0;
+		bananaOnScreen = true;
+	}
+
+	if(bananay+width < 0){
+		bananaOnScreen = false;
 	}
 
 	bananay -= 5;
 	ctx.drawImage(bananaImg, bananax, bananay, width, width);
-	
-	
 }
 
 
-function drawMonkey(x, y){
-	ctx.drawImage(x,y);
+function drawMonkeys(){
+	for (var i = 0; i < monkeys.length; i++) {
+		ctx.drawImage(monkeyImg, monkeys[i][0], monkeys[i][1], width, width);
+		monkeys[i][1] += difficulty;
+	}
 }
-
-
-
-
 
 
 
@@ -112,18 +127,6 @@ function testAcc(){
 			acc_available = true;
 		}
 }
-
-function orientationHandler(){
-	window.ondeviceorientation = function(){
-
-			var beta = Math.round(event.beta); 
-			var gamme = Math.round(event.gamma);
-			document.getElementById("acc").innerHTML = gamma;
-			
-		}
-}
-
-
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
