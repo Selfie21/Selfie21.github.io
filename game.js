@@ -46,10 +46,8 @@ function main() {
 	welcome.hidden = true;
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
-	testAcc();
 
 	window.addEventListener("deviceorientation", function(event) {
-		document.getElementById("acc").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
 		gamma = event.gamma;
 	}, true);
 
@@ -155,13 +153,8 @@ function checkCollision(){
 	}
 }
 // Event Handlers
-function testAcc(){
-	if(window.DeviceOrientationEvent) {
-			acc_available = true;
-		}
-}
-
 function detectMovement(){
+	document.getElementById("acc").innerHTML = "gamma = " + gamma;
 	if(0 > gamma){
 		rightPressed = true;
 	}else{
