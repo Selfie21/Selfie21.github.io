@@ -1,2 +1,2 @@
-# Get Reflexed!
-This Website will host a Web App with a reflex game.
+# Monkey Mayhem
+This Website will host a Web App with a game that lets you feed monkeys!
