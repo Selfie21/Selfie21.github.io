@@ -155,10 +155,12 @@ function checkCollision(){
 // Event Handlers
 function detectMovement(){
 	document.getElementById("acc").innerHTML = "gamma = " + gamma;
-	if(0 > gamma){
-		rightPressed = true;
-	}else{
+	if(gamma < 0){
 		leftPressed = true;
+		rightPressed = false;
+	}else if(gamma > 0){
+		rightPressed = true;
+		leftPressed = false;
 	}
 }
 document.addEventListener("keydown", keyDownHandler, false);
