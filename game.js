@@ -120,13 +120,11 @@ function drawBananas() {
 
 function drawMonkeys(){
 	for (var i = 0; i < monkeys.length; i++) {
-
 		if(monkeyShow[i]){
+			if(clockCounter % difficulty == 0){
+				monkeys[i][1] += 1;
+			}
 			ctx.drawImage(monkeyImg, monkeys[i][0], monkeys[i][1], width, width);
-		}
-
-		if(clockCounter % difficulty == 0){
-			monkeys[i][1] += 1;
 		}
 	}
 }
@@ -135,7 +133,9 @@ function drawMonkeys(){
 function checkCollision(){
 	document.getElementById("acc").innerHTML = "bananax = " + bananax + " monkeyx = " + monkeys[0][0] + "<br>" + "bananay = " + bananay + " monkey_y = " + monkeys[0][1] ;
 	for (var i = 0; i < monkeys.length; i++) {
-		if( (bananax > monkeys[i][0] && bananax < monkeys[i][0]+width) && (bananay > monkeys[i][1] && bananay < monkeys[i][1]+width) ){
+		middlex = bananax+(width/2);
+		middley = bananay+(width/2);
+		if( (middlex > monkeys[i][0] && middlex < monkeys[i][0]+width) &&  (middley > monkeys[i][1]) && (middley < monkeys[i][1]+width)){
 			monkeyShow[i] = false;
 		}
 	}
