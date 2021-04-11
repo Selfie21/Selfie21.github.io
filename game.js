@@ -5,13 +5,14 @@ var ctx = canvas.getContext("2d");
 var acc_available = true;
 var canvas_height = 0;
 var canvas_width = 0;
+var refreshIntervalId = 0;
 
 //Game Variables
 var posx = 0;
 var posy = 0;
 var width = 0;
 var height = 0;
-var difficulty = 10;
+var difficulty = 0;
 
 var clockCounter = 0;
 var rightPressed = false;
@@ -39,8 +40,6 @@ function loadInputs(){
 	canvas_width = Math.round(canvas_height/2);
 	width = Math.round(canvas_width/6);
 	height = 10;
-	posx = Math.round((canvas_width/2) - (width/2));
-	posy = Math.round(canvas_height - 20);
 }
 
 // Start Game
@@ -55,15 +54,30 @@ function main() {
 		gamma = event.gamma;
 	}, true);
 
-	// Setup Objects
+	setupRound(10);
+  	refreshIntervalId = setInterval(draw, 10);
+}
+
+function restart() {
+	clearInterval(refreshIntervalId);
+	setupRound(10);
+	refreshIntervalId = setInterval(draw, 10);
+
+}
+//Resetting Objects
+function setupRound(diff){
+	posx = Math.round((canvas_width/2) - (width/2));
+	posy = Math.round(canvas_height - 20);
 	for (var i = 0; i < monkeys.length; i++) {
   		var randomPlacement = Math.floor((Math.random() * (canvas_width-width)) + 1);
   		monkeys[i][0] = randomPlacement;
   		monkeys[i][1] = (i*width);
+  		monkeyShow[i] = true;
 	} 
 	bananax = posx;
 	bananay = posy;
-  	setInterval(draw, 10);
+	difficulty = diff;
+
 }
 
 
