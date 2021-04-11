@@ -42,7 +42,11 @@ function main() {
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
 	testAcc();
-  	window.ondeviceorientation = deviceOrientationController();
+
+	window.addEventListener("deviceorientation", function(event) {
+	document.getElementById("acc").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
+	}, true);
+
   	setInterval(draw, 10);
 }
 
@@ -109,14 +113,17 @@ function testAcc(){
 		}
 }
 
-function deviceOrientationController(){
-	var gamma = Math.round(event.gamma);  //min -90 max 90
-    var x = (gamma / 900) * canvas_width;
+function orientationHandler(){
+	window.ondeviceorientation = function(){
 
-    document.getElementById("acc").innerHTML = gamma;
-    document.getElementById("x").innerHTML = x;
-
+			var beta = Math.round(event.beta); 
+			var gamme = Math.round(event.gamma);
+			document.getElementById("acc").innerHTML = gamma;
+			
+		}
 }
+
+
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
