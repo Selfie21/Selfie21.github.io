@@ -1,22 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
-		<title>FaceWarp</title>
+		<!-- Meta Tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Warping your face with a twist.">
+		<meta name="keywords" content="Game, Monkeys, Joy">
+		<link id="css" rel="stylesheet" type="text/css" href="main.css">
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+		<title>Feed the Monkeys!</title>
 	</head>
+
 	<body>
-    <nav>
-        Facewarp done differently!
-    </nav>
-		<div class="container">
-    		<div class="blurb">
-        		<h1>Hello World!</h1>
-				<p>This will be the foundation!</p>
-    		</div><!-- /.blurb -->
-		</div><!-- /.container -->
-		<footer>
-    	<ul>
-        		<li><a href="https://github.com/Selfie21">Github</a></li>
-			</ul>
-		</footer>
+
+
+		<p id="Score" hidden>0</p>
+
+		<div id="starter" class="welcomeFrame">
+			<h1> MonkeyMayham!</h1>
+			<h3> Make the monkeys happy by feeding them bananas!  </h3>
+			<embed id="monkeyStart" src="media/happy_monkey.png">
+		</div>
+
+		<div class="mainFrame"> 
+			<canvas id="gameCanvas" width="0" height="0"></canvas>
+		</div>
+
+		<div class="buttons">
+			<button class="btn btn-dark" id ="start" onclick="main()">Start Game</button>
+			<button class="btn btn-dark" id ="readimage"> Change Who to Feed </button>
+		</div>
+
+
+		<div class="section_item">
+			<h3>Beschleunigung, Kompass</h3>
+			<p id="acc">No accelerometer found.</p>
+			<p id="mag">No magnetometer found.</p>
+		</div>
+
+
+
+		<script src="game.js" async></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	</body>
 </html>
