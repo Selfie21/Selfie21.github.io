@@ -11,19 +11,22 @@ var posx = 0;
 var posy = 0;
 var width = 0;
 var height = 0;
-var difficulty = 1;
+var difficulty = 10;
 
 var clockCounter = 0;
 var rightPressed = false;
 var leftPressed = false;
+var gamma = 0;
+var prevgamme = 0;
 
 var bananaImg = new Image();
 var bananax = 0;
 var bananay = 0;
-var bananaOnScreen = false;
+var bananaOnScreen = true;
 
 var monkeyImg = new Image();
 var monkeys = [[0,0],[0,0],[0,0],[0,0]];
+var monkeyShow = [true, true, true, true];
 
 
 //Get Page Size when Page is loaded
@@ -46,8 +49,10 @@ function main() {
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
 	testAcc();
+
 	window.addEventListener("deviceorientation", function(event) {
-	document.querySelector("#mag").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
+		document.getElementById("acc").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
+		gamma = event.gamma;
 	}, true);
 
 	// Setup Objects
@@ -68,6 +73,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     drawLead();
     drawBananas();
+    checkCollision();
     drawMonkeys();
 
     if(rightPressed) {
@@ -114,13 +120,26 @@ function drawBananas() {
 
 function drawMonkeys(){
 	for (var i = 0; i < monkeys.length; i++) {
-		ctx.drawImage(monkeyImg, monkeys[i][0], monkeys[i][1], width, width);
-		monkeys[i][1] += difficulty;
+
+		if(monkeyShow[i]){
+			ctx.drawImage(monkeyImg, monkeys[i][0], monkeys[i][1], width, width);
+		}
+
+		if(clockCounter % difficulty == 0){
+			monkeys[i][1] += 1;
+		}
 	}
 }
 
 
-
+function checkCollision(){
+	document.getElementById("acc").innerHTML = "bananax = " + bananax + " monkeyx = " + monkeys[0][0] + "<br>" + "bananay = " + bananay + " monkey_y = " + monkeys[0][1] ;
+	for (var i = 0; i < monkeys.length; i++) {
+		if( (bananax > monkeys[i][0] && bananax < monkeys[i][0]+width) && (bananay > monkeys[i][1] && bananay < monkeys[i][1]+width) ){
+			monkeyShow[i] = false;
+		}
+	}
+}
 // Event Handlers
 function testAcc(){
 	if(window.DeviceOrientationEvent) {
