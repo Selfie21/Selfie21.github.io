@@ -18,7 +18,7 @@ var clockCounter = 0;
 var rightPressed = false;
 var leftPressed = false;
 var gamma = 0;
-var prevgamme = 0;
+var prevgamma = 0;
 
 var bananaImg = new Image();
 var bananax = 0;
@@ -26,8 +26,8 @@ var bananay = 0;
 var bananaOnScreen = true;
 
 var monkeyImg = new Image();
-var monkeys = [[0,0],[0,0],[0,0],[0,0]];
-var monkeyShow = [true, true, true, true];
+var monkeys = [[0,0],[0,0],[0,0],[0,0],[0,0]];
+var monkeyShow = [true, true, true, true, true];
 
 
 //Get Page Size when Page is loaded
@@ -144,7 +144,6 @@ function drawMonkeys(){
 
 
 function checkCollision(){
-	document.getElementById("acc").innerHTML = "bananax = " + bananax + " monkeyx = " + monkeys[0][0] + "<br>" + "bananay = " + bananay + " monkey_y = " + monkeys[0][1] ;
 	for (var i = 0; i < monkeys.length; i++) {
 		middlex = bananax+(width/2);
 		middley = bananay+(width/2);
@@ -161,6 +160,14 @@ function testAcc(){
 		}
 }
 
+function detectMovement(){
+	if(prevgamma > gamma){
+		rightPressed = true;
+	}else{
+		leftPressed = true;
+	}
+	prevgamma = gamma;
+}
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
