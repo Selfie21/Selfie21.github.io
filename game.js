@@ -102,10 +102,9 @@ function drawLead() {
 }
 
 function drawBananas() {
-	if(clockCounter > 100 && !bananaOnScreen){
+	if(!bananaOnScreen){
 		bananax = posx;
 		bananay = posy;
-		clockCounter = 0;
 		bananaOnScreen = true;
 	}
 
@@ -135,8 +134,9 @@ function checkCollision(){
 	for (var i = 0; i < monkeys.length; i++) {
 		middlex = bananax+(width/2);
 		middley = bananay+(width/2);
-		if( (middlex > monkeys[i][0] && middlex < monkeys[i][0]+width) &&  (middley > monkeys[i][1]) && (middley < monkeys[i][1]+width)){
+		if(monkeyShow[i] && (middlex > monkeys[i][0] && middlex < monkeys[i][0]+width) &&  (middley > monkeys[i][1]) && (middley < monkeys[i][1]+width)){
 			monkeyShow[i] = false;
+			bananaOnScreen = false;
 		}
 	}
 }
