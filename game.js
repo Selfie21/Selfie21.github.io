@@ -1,11 +1,11 @@
 //Canvas
 var canvas = document.getElementById("gameCanvas");
 var welcome = document.getElementById("starter");
+var test = document.getElementById("test");
 var ctx = canvas.getContext("2d");
-var acc_available = false;
-var margins = 0;
-var screen_width = 0;
-var screen_height = 0;
+var acc_available = true;
+var canvas_height = 0;
+var canvas_width = 0;
 
 
 
@@ -13,42 +13,42 @@ var screen_height = 0;
 var posx = canvas.width/2;
 var posy = canvas.height-30;
 
+
+//Get Page Size when Page is loaded
+window.onload = getPageSize();
+
+function getPageSize(){
+	canvas_height = window.innerHeight - (window.innerHeight/10);
+	canvas_width = canvas_height/2;
+	document.getElementById("test").innerHTML = canvas_height;
+}
+
+// Start Game
 function main() {
 	welcome.hidden = true;
-	testMobile();
-	setupCanvas();
-	drawMonkey(0,0);
+	canvas.height = canvas_height;
+	canvas.width = canvas_width;
+	testAcc();
+  	window.ondeviceorientation = deviceOrientationController();
 }
 
-function setupCanvas() {
-
-	screen_width = 300;
-	screen_height = 500;
-
-	canvas.height = screen_height;
-	canvas.width = screen_width;
-}
 
 function drawMonkey(x, y){
 	ctx.drawImage(x,y);
 }
 
-function testMobile(){
-	
+function testAcc(){
 	if(window.DeviceOrientationEvent) {
 			acc_available = true;
 		}
 }
 
-window.ondevicemotion = function(event) { 
-	var ax = event.accelerationIncludingGravity.x
-	var ay = event.accelerationIncludingGravity.y
-	var az = event.accelerationIncludingGravity.z
 
-	document.querySelector("#acc").innerHTML = "X = " + ax + "<br>" + "Y = " + ay + "<br>" + "Z = " + az;
+function deviceOrientationController(){
+	var gamma = Math.round(event.gamma);  //min -90 max 90
+    var x = (gamma / 900) * screen_width;
+
+    document.getElementById("acc").innerHTML = gamma;
+    document.getElementById("x").innerHTML = x;
+
 }
-
-window.addEventListener("deviceorientation", function(event) {
-	document.querySelector("#mag").innerHTML = "alpha = " + event.alpha + "<br>" + "beta = " + event.beta + "<br>" + "gamma = " + event.gamma;
-}, true);
-
