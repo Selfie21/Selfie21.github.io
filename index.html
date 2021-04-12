@@ -24,7 +24,7 @@
 			<h1> MonkeyMayham!</h1>
 			<h3> Make the monkeys happy by feeding them bananas!  </h3>
 			<br>
-			<embed id="monkeyStart" src="media/happy_monkey.png">
+			<img id="monkeyStart" src="media/happy_monkey.png">
 		</div>
 
 		<div class="mainFrame"> 
@@ -33,7 +33,8 @@
 
 		<div class="buttons">
 			<button class="btn btn-dark" id ="start" onclick="main()">Start Game</button>
-			<button class="btn btn-dark" id ="readimage" onclick="restart()"> Change Who to Feed </button>
+			<input type="file" id="fileupload" accept="image/*" capture hidden/>
+			<input class="btn btn-dark" id="btnfileupload" type="button" value="Change who to feed!" />
 		</div>
 
 

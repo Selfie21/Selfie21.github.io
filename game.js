@@ -31,7 +31,7 @@ var monkeys = [[0,0],[0,0],[0,0],[0,0],[0,0]];
 var monkeyShow = [true, true, true, true, true];
 
 
-//Get Page Size when Page is loaded
+//Load Pictures and get Page Size when loading
 window.onload = loadInputs();
 
 function loadInputs(){
@@ -42,12 +42,15 @@ function loadInputs(){
 	width = Math.round(canvas_width/6);
 	height = 10;
 	topmargin = Math.round(canvas_height/35);
-	score = 0;
 }
 
 // Start Game
 function main() {
+	if(refreshIntervalId != 0){
+		clearInterval(refreshIntervalId);
+	}
 	welcome.hidden = true;
+	document.getElementById("start").innerHTML = "Restart";
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
 
@@ -55,6 +58,7 @@ function main() {
 		gamma = event.gamma;
 	}, true);
 
+	score = 0;
 	setupRound(10);
 }
 
@@ -88,11 +92,11 @@ function checkWinCondition(){
 //Checks if monkey touched the ground
 function checkLossCondition(){
 	for (var i = 0; i < monkeys.length; i++) {
-		if(monkeyShow[i] && monkeys[i][1]+width < posy){
-			return false;
+		if(monkeyShow[i] && monkeys[i][1]+width > posy){
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
 
@@ -112,7 +116,8 @@ function draw() {
 		setupRound(Math.round(difficulty/2));
     }
     if(checkLossCondition()){
-    	alert("You Lost!")
+    	drawGameOver();
+    	clearInterval(refreshIntervalId);
     }
 
     if(rightPressed) {
@@ -168,10 +173,18 @@ function drawMonkeys(){
 }
 
 function drawScore(){
-	var test = canvas_height/40;
 	ctx.fillStyle = "black";
 	ctx.font = "bold " + topmargin + "px Helvetica";
-	ctx.fillText("Score:" + score, 7, 20);
+	ctx.fillText("Score:" + score, topmargin, topmargin);
+}
+
+function drawGameOver(){
+	ctx.clearRect(0, 0, canvas_width, canvas_height);
+	ctx.fillStyle = "black";
+	ctx.font = "bold " + Math.round(topmargin*2.7) + "px Helvetica";
+	ctx.fillText("Game Over!", topmargin, canvas_height/2);
+	ctx.fillText("Score: " + score, topmargin, (canvas_height/2 + (Math.round(topmargin*2.7))));
+
 }
 
 function checkCollision(){
@@ -195,7 +208,36 @@ function inBetween(item, edge, length){
 }
 
 
-// Event Handlers
+// File Upload Handler
+const file_uploader = document.getElementById("fileupload");
+document.getElementById("btnfileupload").addEventListener("click", getPicture);
+
+function getPicture() {
+	file_uploader.click();
+}
+
+file_uploader.addEventListener('change', (e) => changeImage(e.target.files));
+
+function changeImage(fileList) {
+	var monkeyyy = document.getElementById("monkeyStart");
+	let file = null;
+
+	for (let i = 0; i < fileList.length; i++) {
+	  if (fileList[i].type.match(/^image\//)) {
+	    file = fileList[i];
+	    break;
+	  }
+	}
+
+	if (file !== null) {
+		newImage = URL.createObjectURL(file);
+		monkeyyy.src = newImage;
+		monkeyImg.src = newImage;
+	}
+}
+
+
+// Input Event Handler
 function detectMovement(){
 	document.getElementById("acc").innerHTML = "gamma = " + gamma;
 	if(gamma < 0){
