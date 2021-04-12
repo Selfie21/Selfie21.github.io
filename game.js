@@ -39,7 +39,7 @@ function loadInputs(){
   	monkeyImg.src = "media/happy_monkey.png";
 	canvas_height = Math.round(window.innerHeight - (window.innerHeight/10));
 	canvas_width = Math.round(canvas_height/2);
-	width = Math.round(canvas_width/6);
+	width = Math.round(canvas_width/5);
 	height = 10;
 	topmargin = Math.round(canvas_height/35);
 }
@@ -239,7 +239,6 @@ function changeImage(fileList) {
 
 // Input Event Handler
 function detectMovement(){
-	document.getElementById("acc").innerHTML = "gamma = " + gamma;
 	if(gamma < 0){
 		leftPressed = true;
 		rightPressed = false;
