@@ -219,7 +219,7 @@ function getPicture() {
 file_uploader.addEventListener('change', (e) => changeImage(e.target.files));
 
 function changeImage(fileList) {
-	var monkeyyy = document.getElementById("monkeyStart");
+	var start_picture = document.getElementById("monkeyStart");
 	let file = null;
 
 	for (let i = 0; i < fileList.length; i++) {
@@ -231,7 +231,7 @@ function changeImage(fileList) {
 
 	if (file !== null) {
 		newImage = URL.createObjectURL(file);
-		monkeyyy.src = newImage;
+		start_picture.src = newImage;
 		monkeyImg.src = newImage;
 	}
 }

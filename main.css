@@ -9,6 +9,8 @@
 
 
 #monkeyStart{
+	margin-top: 1em;
+	margin-bottom: 1em;
 	-webkit-animation: spin 4s infinite linear;
 }
 
