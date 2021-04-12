@@ -53,6 +53,8 @@ function main() {
 	document.getElementById("start").innerHTML = "Restart";
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
+	canvas.style.width = canvas_height;
+	canvas.style.height = canvas_width;
 
 	window.addEventListener("deviceorientation", function(event) {
 		gamma = event.gamma;
