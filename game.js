@@ -41,7 +41,7 @@ function loadInputs(){
 	canvas_width = Math.round(canvas_height/2);
 	width = Math.round(canvas_width/5);
 	height = 10;
-	topmargin = Math.round(canvas_height/35);
+	topmargin = Math.round(canvas_height/20);
 }
 
 // Start Game
@@ -50,7 +50,8 @@ function main() {
 		clearInterval(refreshIntervalId);
 	}
 	welcome.hidden = true;
-	document.getElementById("start").innerHTML = "Restart";
+	document.getElementById("btnstart").innerHTML = "Restart";
+	document.getElementById("btnhelp").hidden = true;
 	canvas.height = canvas_height;
 	canvas.width = canvas_width;
 	canvas.style.width = canvas_height;
@@ -183,9 +184,9 @@ function drawScore(){
 function drawGameOver(){
 	ctx.clearRect(0, 0, canvas_width, canvas_height);
 	ctx.fillStyle = "black";
-	ctx.font = "bold " + Math.round(topmargin*2.7) + "px Helvetica";
+	ctx.font = "bold " + Math.round(topmargin*1.5) + "px Helvetica";
 	ctx.fillText("Game Over!", topmargin, canvas_height/2);
-	ctx.fillText("Score: " + score, topmargin, (canvas_height/2 + (Math.round(topmargin*2.7))));
+	ctx.fillText("Score: " + score, topmargin, (canvas_height/2 + (Math.round(topmargin*1.5))));
 
 }
 
