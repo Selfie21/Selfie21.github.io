@@ -53,17 +53,10 @@ function main() {
 	document.getElementById("btnstart").innerHTML = "Restart";
 	document.getElementById("btnhelp").hidden = true;
 
-	const dpr = window.devicePixelRatio || 1;
-	canvas.height = canvas_height * dpr;
-	canvas.width = canvas_width * dpr;
+	canvas.height = canvas_height;
+	canvas.width = canvas_width;
 	canvas.style.width = canvas_height;
 	canvas.style.height = canvas_width;
-
-	let ratio = Math.min(
-	  canvas.clientWidth / canvas_width,
-	  canvas.clientHeight / canvas_height
-	);
-	ctx.scale(ratio * dpr, ratio * dpr);
 
 	window.addEventListener("deviceorientation", function(event) {
 		gamma = event.gamma;
