@@ -69,16 +69,11 @@ function main() {
 
 //requesting Permission for iOS
 function requestDeviceOrientation () {
-	if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-	    DeviceMotionEvent.requestPermission().then(response => {
-	        if (response == 'granted') {
-	            alert("You are ready to play the game now!");
-	        }else{
-	        	alert("Without Permission to the accelerometer the game will not work on mobile :(");
-	        }
-	    });
-	}
-	alert("TTTT");
+    DeviceMotionEvent.requestPermission().then(response => {
+        if (response == 'granted') {
+        	alert("GRANTED!");
+        }
+    });
 }
 
 
