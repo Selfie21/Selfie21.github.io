@@ -69,14 +69,10 @@ function main() {
 
 //requesting Permission for iOS
 function requestDeviceOrientation () {
-    DeviceMotionEvent.requestPermission().then(response => {
-        if (response == 'granted') {
-        	alert("GRANTED!");
-        }
-    });
+	if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+	    DeviceMotionEvent.requestPermission().then(response => {});
+	}
 }
-
-
 
 
 //Resetting Objects and Starting Round
