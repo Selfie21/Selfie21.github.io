@@ -15,16 +15,19 @@ var width = 0;
 var height = 0;
 var difficulty = 0;
 var score = 0;
+var moveSpeed = 2;
 
 var clockCounter = 0;
 var rightPressed = false;
 var leftPressed = false;
+var cheatsActivated = false;
 var gamma = 0;
 
 var bananaImg = new Image();
 var bananax = 0;
 var bananay = 0;
 var bananaOnScreen = true;
+var bananaSpeed = 5;
 
 var monkeyImg = new Image();
 var monkeys = [[0,0],[0,0],[0,0],[0,0],[0,0]];
@@ -64,6 +67,7 @@ function main() {
 	}, true);
 
 	score = 0;
+	bananaSpeed = 5;
 	setupRound(10);
 }
 
@@ -117,6 +121,12 @@ function checkLossCondition(){
 // Drawing Part
 function draw() {
 
+	if(cheatsActivated){
+		bananaSpeed = 30;
+	}else{
+		bananaSpeed = 5;
+	}
+
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     drawScore();
     drawLead();
@@ -135,13 +145,13 @@ function draw() {
     }
 
     if(rightPressed) {
-        posx += 1;
+        posx += moveSpeed;
         if (posx + width > canvas_width){
             posx = canvas_width - width;
         }
     }
     else if(leftPressed) {
-        posx -= 1;
+        posx -= moveSpeed;
         if (posx < 0){
             posx = 0;
         }
@@ -170,7 +180,7 @@ function drawBananas() {
 		bananaOnScreen = false;
 	}
 
-	bananay -= 5;
+	bananay -= bananaSpeed;
 	ctx.drawImage(bananaImg, bananax, bananay, width, width);
 }
 
@@ -271,6 +281,10 @@ function keyDownHandler(e) {
     else if(e.key == "ArrowLeft") {
         leftPressed = true;
     }
+
+    if(e.key == "ß"){
+    	cheatsActivated = true;
+    }
 }
 
 function keyUpHandler(e) {
@@ -279,5 +293,9 @@ function keyUpHandler(e) {
     }
     else if(e.key == "ArrowLeft") {
         leftPressed = false;
+    }
+
+    if(e.key == "ß"){
+    	cheatsActivated = false;
     }
 }
