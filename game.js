@@ -50,6 +50,7 @@ function main() {
 		clearInterval(refreshIntervalId);
 	}
 	welcome.hidden = true;
+	canvas.hidden = false;
 	document.getElementById("btnstart").innerHTML = "Restart";
 	document.getElementById("btnhelp").hidden = true;
 
