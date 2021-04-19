@@ -15,7 +15,7 @@ var width = 0;
 var height = 0;
 var difficulty = 0;
 var score = 0;
-var moveSpeed = 2;
+var moveSpeed = 1;
 
 var clockCounter = 0;
 var rightPressed = false;
