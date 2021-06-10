@@ -40,7 +40,7 @@ window.onload = loadInputs();
 function loadInputs(){
     bananaImg.src = "media/banana.png";
     monkeyImg.src = "media/happy_monkey.png";
-    canvas_height = Math.round(window.innerHeight - (window.innerHeight/10));
+    canvas_height = Math.round(window.innerHeight - (window.innerHeight/8));
     canvas_width = Math.round(canvas_height/2);
     width = Math.round(canvas_width/5);
     height = 10;
@@ -56,18 +56,27 @@ function main() {
     canvas.hidden = false;
     document.getElementById("btnstart").innerHTML = "Restart";
     document.getElementById("btnhelp").hidden = true;
+    loadInputs();
 
     // Update Screen to current Orientation
-    loadInputs();
+    if(screen.availHeight > screen.availWidth){
+        window.addEventListener("deviceorientation", function(event) {
+        gamma = event.gamma;
+    }, true);
+
+    }else{
+        window.addEventListener("deviceorientation", function(event) {
+        gamma = event.beta;
+    }, true);
+    }
+
 
     canvas.height = canvas_height;
     canvas.width = canvas_width;
     canvas.style.width = canvas_height;
     canvas.style.height = canvas_width;
 
-    window.addEventListener("deviceorientation", function(event) {
-        gamma = event.gamma;
-    }, true);
+
 
     score = 0;
     bananaSpeed = 5;
