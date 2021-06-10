@@ -38,94 +38,97 @@ var monkeyShow = [true, true, true, true, true];
 window.onload = loadInputs();
 
 function loadInputs(){
-  	bananaImg.src = "media/banana.png";
-  	monkeyImg.src = "media/happy_monkey.png";
-	canvas_height = Math.round(window.innerHeight - (window.innerHeight/10));
-	canvas_width = Math.round(canvas_height/2);
-	width = Math.round(canvas_width/5);
-	height = 10;
-	topmargin = Math.round(canvas_height/20);
+    bananaImg.src = "media/banana.png";
+    monkeyImg.src = "media/happy_monkey.png";
+    canvas_height = Math.round(window.innerHeight - (window.innerHeight/10));
+    canvas_width = Math.round(canvas_height/2);
+    width = Math.round(canvas_width/5);
+    height = 10;
+    topmargin = Math.round(canvas_height/20);
 }
 
 // Start Game
 function main() {
-	if(refreshIntervalId != 0){
-		clearInterval(refreshIntervalId);
-	}
-	welcome.hidden = true;
-	canvas.hidden = false;
-	document.getElementById("btnstart").innerHTML = "Restart";
-	document.getElementById("btnhelp").hidden = true;
+    if(refreshIntervalId != 0){
+        clearInterval(refreshIntervalId);
+    }
+    welcome.hidden = true;
+    canvas.hidden = false;
+    document.getElementById("btnstart").innerHTML = "Restart";
+    document.getElementById("btnhelp").hidden = true;
 
-	canvas.height = canvas_height;
-	canvas.width = canvas_width;
-	canvas.style.width = canvas_height;
-	canvas.style.height = canvas_width;
+    // Update Screen to current Orientation
+    loadInputs();
 
-	window.addEventListener("deviceorientation", function(event) {
-		gamma = event.gamma;
-	}, true);
+    canvas.height = canvas_height;
+    canvas.width = canvas_width;
+    canvas.style.width = canvas_height;
+    canvas.style.height = canvas_width;
 
-	score = 0;
-	bananaSpeed = 5;
-	setupRound(10);
+    window.addEventListener("deviceorientation", function(event) {
+        gamma = event.gamma;
+    }, true);
+
+    score = 0;
+    bananaSpeed = 5;
+    setupRound(10);
 }
 
 
 //requesting Permission for iOS
 function requestDeviceOrientation () {
-	if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-	    DeviceMotionEvent.requestPermission().then(response => {});
-	}
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission().then(response => {});
+    }
 }
 
 
 //Resetting Objects and Starting Round
 function setupRound(diff){
-	posx = Math.round((canvas_width/2) - (width/2));
-	posy = Math.round(canvas_height - 20);
-	for (var i = 0; i < monkeys.length; i++) {
-  		var randomPlacement = Math.floor((Math.random() * (canvas_width-width)) + 1);
-  		monkeys[i][0] = randomPlacement;
-  		monkeys[i][1] = (i*width)+topmargin+10;
-  		monkeyShow[i] = true;
-	}
-	bananax = posx;
-	bananay = posy;
-	difficulty = diff;
-	refreshIntervalId = setInterval(draw, 10);
+    posx = Math.round((canvas_width/2) - (width/2));
+    posy = Math.round(canvas_height - 20);
+    for (var i = 0; i < monkeys.length; i++) {
+        var randomPlacement = Math.floor((Math.random() * (canvas_width-width)) + 1);
+        monkeys[i][0] = randomPlacement;
+        monkeys[i][1] = (i*width)+topmargin+10;
+        monkeyShow[i] = true;
+    }
+    bananax = posx;
+    bananay = posy;
+    difficulty = diff;
+    refreshIntervalId = setInterval(draw, 10);
 }
 
 
 //Checks if each monkey has been shot
 function checkWinCondition(){
-	for (var i = 0; i < monkeys.length; i++) {
-		if(monkeyShow[i]){
-			return false;
-		}
-	}
-	return true;
+    for (var i = 0; i < monkeys.length; i++) {
+        if(monkeyShow[i]){
+            return false;
+        }
+    }
+    return true;
 }
 
 //Checks if monkey touched the ground
 function checkLossCondition(){
-	for (var i = 0; i < monkeys.length; i++) {
-		if(monkeyShow[i] && monkeys[i][1]+width > posy){
-			return true;
-		}
-	}
-	return false;
+    for (var i = 0; i < monkeys.length; i++) {
+        if(monkeyShow[i] && monkeys[i][1]+width > posy){
+            return true;
+        }
+    }
+    return false;
 }
 
 
 // Drawing Part
 function draw() {
 
-	if(cheatsActivated){
-		bananaSpeed = 30;
-	}else{
-		bananaSpeed = 5;
-	}
+    if(cheatsActivated){
+        bananaSpeed = 30;
+    }else{
+        bananaSpeed = 5;
+    }
 
     ctx.clearRect(0, 0, canvas_width, canvas_height);
     drawScore();
@@ -136,12 +139,12 @@ function draw() {
     checkCollision();
     detectMovement();
     if(checkWinCondition()){
-		clearInterval(refreshIntervalId);
-		setupRound(Math.round(difficulty/2));
+        clearInterval(refreshIntervalId);
+        setupRound(Math.round(difficulty/2));
     }
     if(checkLossCondition()){
-    	drawGameOver();
-    	clearInterval(refreshIntervalId);
+        drawGameOver();
+        clearInterval(refreshIntervalId);
     }
 
     if(rightPressed) {
@@ -157,7 +160,7 @@ function draw() {
         }
     }
 
-  	clockCounter += 1;
+    clockCounter += 1;
 }
 
 
@@ -170,65 +173,65 @@ function drawLead() {
 }
 
 function drawBananas() {
-	if(!bananaOnScreen){
-		bananax = posx;
-		bananay = posy;
-		bananaOnScreen = true;
-	}
+    if(!bananaOnScreen){
+        bananax = posx;
+        bananay = posy;
+        bananaOnScreen = true;
+    }
 
-	if(bananay+width < 0){
-		bananaOnScreen = false;
-	}
+    if(bananay+width < 0){
+        bananaOnScreen = false;
+    }
 
-	bananay -= bananaSpeed;
-	ctx.drawImage(bananaImg, bananax, bananay, width, width);
+    bananay -= bananaSpeed;
+    ctx.drawImage(bananaImg, bananax, bananay, width, width);
 }
 
 
 function drawMonkeys(){
-	for (var i = 0; i < monkeys.length; i++) {
-		if(monkeyShow[i]){
-			if(clockCounter % difficulty == 0){
-				monkeys[i][1] += 1;
-			}
-			ctx.drawImage(monkeyImg, monkeys[i][0], monkeys[i][1], width, width);
-		}
-	}
+    for (var i = 0; i < monkeys.length; i++) {
+        if(monkeyShow[i]){
+            if(clockCounter % difficulty == 0){
+                monkeys[i][1] += 1;
+            }
+            ctx.drawImage(monkeyImg, monkeys[i][0], monkeys[i][1], width, width);
+        }
+    }
 }
 
 function drawScore(){
-	ctx.fillStyle = "black";
-	ctx.font = "bold " + topmargin + "px Helvetica";
-	ctx.fillText("Score:" + score, topmargin, topmargin);
+    ctx.fillStyle = "black";
+    ctx.font = "bold " + topmargin + "px Helvetica";
+    ctx.fillText("Score:" + score, topmargin, topmargin);
 }
 
 function drawGameOver(){
-	ctx.clearRect(0, 0, canvas_width, canvas_height);
-	ctx.fillStyle = "black";
-	ctx.font = "bold " + Math.round(topmargin*1.5) + "px Helvetica";
-	ctx.fillText("Game Over!", topmargin, canvas_height/2);
-	ctx.fillText("Score: " + score, topmargin, (canvas_height/2 + (Math.round(topmargin*1.5))));
+    ctx.clearRect(0, 0, canvas_width, canvas_height);
+    ctx.fillStyle = "black";
+    ctx.font = "bold " + Math.round(topmargin*1.5) + "px Helvetica";
+    ctx.fillText("Game Over!", topmargin, canvas_height/2);
+    ctx.fillText("Score: " + score, topmargin, (canvas_height/2 + (Math.round(topmargin*1.5))));
 
 }
 
 function checkCollision(){
-	for (var i = 0; i < monkeys.length; i++) {
-		middlex = bananax+(width/2);
-		middley = bananay+(width/2);
-		if(monkeyShow[i] && inBetween(middlex, monkeys[i][0], width) &&  inBetween(middley, monkeys[i][1], width)){
-			monkeyShow[i] = false;
-			bananaOnScreen = false;
-			score += 1;
-		}
-	}
+    for (var i = 0; i < monkeys.length; i++) {
+        middlex = bananax+(width/2);
+        middley = bananay+(width/2);
+        if(monkeyShow[i] && inBetween(middlex, monkeys[i][0], width) &&  inBetween(middley, monkeys[i][1], width)){
+            monkeyShow[i] = false;
+            bananaOnScreen = false;
+            score += 1;
+        }
+    }
 }
 
 
 function inBetween(item, edge, length){
-	if((item > edge) && (item < (edge+length))){
-		return true;
-	}
-	return false;
+    if((item > edge) && (item < (edge+length))){
+        return true;
+    }
+    return false;
 }
 
 
@@ -237,39 +240,39 @@ const file_uploader = document.getElementById("fileupload");
 document.getElementById("btnfileupload").addEventListener("click", getPicture);
 
 function getPicture() {
-	file_uploader.click();
+    file_uploader.click();
 }
 
 file_uploader.addEventListener('change', (e) => changeImage(e.target.files));
 
 function changeImage(fileList) {
-	var start_picture = document.getElementById("monkeyStart");
-	let file = null;
+    var start_picture = document.getElementById("monkeyStart");
+    let file = null;
 
-	for (let i = 0; i < fileList.length; i++) {
-	  if (fileList[i].type.match(/^image\//)) {
-	    file = fileList[i];
-	    break;
-	  }
-	}
+    for (let i = 0; i < fileList.length; i++) {
+      if (fileList[i].type.match(/^image\//)) {
+        file = fileList[i];
+        break;
+      }
+    }
 
-	if (file !== null) {
-		newImage = URL.createObjectURL(file);
-		start_picture.src = newImage;
-		monkeyImg.src = newImage;
-	}
+    if (file !== null) {
+        newImage = URL.createObjectURL(file);
+        start_picture.src = newImage;
+        monkeyImg.src = newImage;
+    }
 }
 
 
 // Input Event Handler
 function detectMovement(){
-	if(gamma < 0){
-		leftPressed = true;
-		rightPressed = false;
-	}else if(gamma > 0){
-		rightPressed = true;
-		leftPressed = false;
-	}
+    if(gamma < 0){
+        leftPressed = true;
+        rightPressed = false;
+    }else if(gamma > 0){
+        rightPressed = true;
+        leftPressed = false;
+    }
 }
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -283,7 +286,7 @@ function keyDownHandler(e) {
     }
 
     if(e.key == "ß"){
-    	cheatsActivated = true;
+        cheatsActivated = true;
     }
 }
 
@@ -296,6 +299,6 @@ function keyUpHandler(e) {
     }
 
     if(e.key == "ß"){
-    	cheatsActivated = false;
+        cheatsActivated = false;
     }
 }
